@@ -1,0 +1,32 @@
+<nav class="nav left-nav" role="navigation">
+    <div class="left-nav-body">
+        <ul class="navbar-nav">
+            <li class="nav-item"   routerLinkActive="active" *ngFor="let leftNavItem of leftNavItems">
+                <a class="nav-link" [routerLink]="[leftNavItem.slug]" >
+                    <span class="sidebar-list-ki ki ki-xxl {{leftNavItem.icon}}"></span>
+                    <span class="sidebar-list-label">{{leftNavItem.title}}</span>
+                </a>
+                <!-- <div class="sidebar-dropdown" *ngIf="leftNavItem.children">
+                    <ul class="sidebar-dropdown-list">
+                        <li class="sidebar-dropdown-list-item" *ngFor="let child of leftNavItem.children">
+                            <a href="#" routerLinkActive="active" routerLink="/performance/sub-top-nav">
+                                <span class="sidebar-dropdown-label text-truncate">{{child.title}}</span>
+                                <span class="ki ki-chevron-right sidebar-dropdown-label ml-auto"
+                                    *ngIf="child.children"></span>
+                            </a>
+                            <div class="sidebar-sub-dropdown" *ngIf="child.children">
+                                <ul class="sidebar-dropdown-list">
+                                    <li routerlinkactive="active" *ngFor="let subchild of child.children">
+                                        <a href="#" routerLink="/performance/reviews/review-groups/review-group">
+                                            <span class="sidebar-dropdown-label text-truncate">{{subchild.title}}</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div> -->
+            </li>
+        </ul>
+    </div>
+</nav>

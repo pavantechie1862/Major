@@ -1,0 +1,121 @@
+<!-- <div class="modal-header bg-secondary p-24">
+    <h4 class="modal-title text-black">Add New Club </h4>
+    <span class="ki ki-close" (click)="modalReference.hide()"></span>
+</div> -->
+<div class="modal-body clear-padding">
+    <div class="bg-secondary d-flex justify-content-between align-items-center p-20 border-bottom rounded">
+        <h4 class="modal-title text-black">Add New Club </h4>
+        <span class="ki ki-close cursor-pointer" (click)="modalReference.hide()"></span>
+    </div>
+    <form action="" [formGroup]="addClubForm" (submit)="onSubmit()" #clubForm>
+        <div class="content-section">
+            <div class="d-flex">
+                <div class="d-flex flex-column w-39-9pc align-items-center border-dashed border-secondary border-left-0 border-bottom-0 border-top-0 pt-20 pl-28 pr-28">
+                    <div class="w-250 h-250 bg-secondary rounded-circle mt-100">
+                        <div class="d-inline-block position-relative">
+                            <img class="w-50 h-50 ml-60 mt-50" src="assets/images/camera.png" alt="">
+                            <input type="file" value="" class="input-file">
+                        </div>
+                    </div>
+                    <p class="mt-20">Add Group Icon (optional)</p>
+                </div>
+                <div class="w-75 p-16">
+                    <div class="w-450">
+                        <div class="form-group">
+                            <label class="font-weight-semi-bold">Name *</label>
+                            <input type="text" class="form-control text-normal w-300" placeholder="Enter Name" formControlName="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="font-weight-semi-bold">Description *</label>
+                            <textarea class="form-control resize-none text-normal" rows="3"
+                                placeholder="Enter Club Description" formControlName="description" required></textarea>
+                        </div>
+    
+                        <div class="d-flex align-items-center">
+                            <p class="text-large font-weight-semi-bold mr-20">This Club is a Public Club</p>
+                            <input type="checkbox" class="toggle-switch" id="toggle-switch" (click)="toggleClubAvailability()"  formControlName="isPublic">
+                            <label for="toggle-switch" class="switch-label"></label>
+                        </div>
+    
+                        <div class="p-12 font-weight-semi-bold" *ngIf="!isClubPrivate" >
+                            <div>
+                                <input type="radio" name="clubType" class="radio-button-sm" id="open-club"  formControlName="clubType" value="1" />
+                                <label for="open-club">Open Club</label>
+                            </div>
+                            <div class="mt-1">
+                                <input type="radio" name="clubType" class="radio-button-sm" id="closed-club" formControlName="clubType" value="2" />
+                                <label for="closed-club">Closed Club</label>
+                            </div>
+                        </div>
+    
+                        <div class="mt-10">
+                            <p class="text-large font-weight-semi-bold">Add Club Admins (Optional)</p>
+                            <!-- <div class="chip-wrapper">
+                                <input type="text" class="form-control chip-typeahead text-normal" placeholder="Search" formControlName="clubAdmins">
+                            </div> -->
+                            <div class="chip-wrapper">
+                                <div class="chips employee-profile-header"  *ngFor="let club of selectedClubAdmins ; let i=index">
+                                    <div
+                                        class="profile profile-24">
+                                        <div class="profile-picture-container">
+                                            <div class="profile-picture ng-star-inserted">
+                                                <div class="img-initials bg-accent-violet" >
+                                                    {{club.userName.charAt(0)}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <span class="name">{{club.userName}}</span><span class="ki ki-cancel-circle" (click)="deleteClub(i,selectedClubAdmins)"></span>
+                                </div>
+                                <div class="dropdown dropdown-custom dropdown-custom-xs" dropdown>
+                                    <input type="text" class="form-control chip-typeahead" (input)="onClubAdminInput()" formControlName="clubAdmins" dropdownToggle>
+                                    <ul class="dropdown-menu w-150" aria-labelledby="menu" *dropdownMenu>
+                                        <li *ngFor="let club of matchedClubAdmins">
+                                            <a class="dropdown-item" (click)="onClubAdminClick(club)"> {{club.userName}} </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <div class="mt-20">
+                            <p class="text-large font-weight-semi-bold">Add Club Members *</p>
+                            <!-- <div class="chip-wrapper border-black">
+                                <input type="text" class="form-control chip-typeahead text-normal" placeholder="Search" formControlName="clubMembers" required >
+                            </div> -->
+                            
+                            <div class="chip-wrapper">
+                                <div class="chips employee-profile-header"  *ngFor="let club of selectedClubMembers ; let i=index">
+                                    <div
+                                        class="profile profile-24">
+                                        <div class="profile-picture-container">
+                                            <div class="profile-picture ng-star-inserted">
+                                                <div class="img-initials bg-accent-violet" >
+                                                    {{club.userName.charAt(0)}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <span class="name">{{club.userName}}</span><span class="ki ki-cancel-circle" (click)="deleteClub(i,selectedClubMembers)"></span>
+                                </div>
+                                <div class="dropdown dropdown-custom dropdown-custom-xs" dropdown>
+                                    <input type="text" class="form-control chip-typeahead" (input)="onClubMemberInput()" formControlName="clubMembers" dropdownToggle>
+                                    <ul class="dropdown-menu w-150" aria-labelledby="menu" *dropdownMenu>
+                                        <li *ngFor="let club of matchedClubMembers">
+                                            <a class="dropdown-item" (click)="onClubMemberClick(club)"> {{club.userName}} </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="modal-footer mt-20">
+                        <button class="btn bg-slate text-white" (click)="modalReference.hide()">Cancel</button>
+                        <button class="btn bg-accent-violet text-white ml-10" type="submit">Add Club</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

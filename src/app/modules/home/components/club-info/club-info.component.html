@@ -1,0 +1,226 @@
+<div class="card clear-margin border-0 h-100" *ngIf="club">
+    <div class="d-flex align-items-center py-12 border-bottom-1 border">
+      <div class="mx-20">
+        <img
+          height="100"
+          width="100"
+          src="{{club.clubDescription.clubProfilePicture}}"
+        />
+      </div>
+      <div class="flex-grow-1 ml-20">
+        <div class="d-flex justify-content-between mb-10">
+            <div class="d-flex">
+              <h3>{{club.clubDescription.clubName}}</h3>
+              <i class="ki ki-lock-filled ml-20" *ngIf="club.clubDescription.clubType==2 || club.clubDescription.clubType==3"></i>
+            </div>
+            <div class="d-flex">
+              <i class="ki ki-edit"></i>
+              <i class="ki ki-close mx-10 cursor-pointer" routerLink="../club-detail"></i>
+            </div>
+          </div>
+          <div>
+            <p class="w-500 mb-20">
+                {{club.clubDescription.description}}
+            </p>
+          </div>
+          <div class="d-flex justify-content-between">
+            <p>Created by {{club.clubDescription.clubCreatedBy}} on {{club.clubDescription.clubCreatedOn| date:'MMM dd, YYYY \'at\' HH:MM'}}</p>
+            <div class="d-flex justify-content-between align-items-center">
+                <p>{{club.clubDescription.clubParticipantsCount}} Paticipants</p>
+      
+              <div class="dropdown" dropdown>
+                  <a class="icon-click" dropdownToggle id="dropdown-menu" aria-haspopup="true" aria-expanded="false">
+                      <span class="ki ki-add-user mr-10"></span>
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-right w-400 p-20 clear-padding" (click)="$event.stopPropagation()" aria-labelledby="dropdown-menu" *dropdownMenu>
+                      <div class="p-20">
+                          <p class="text-normal">Select users you want to add</p>
+                          <input type="text" class="form-control my-10" placeholder="start typing user name" />
+                          <li>
+                              <label class="dropdown-item">
+                                  <input class="checkbox-sm" type="checkbox" id="action1">
+                                  <label for="action1">
+                                          <div class="d-flex align-items-center">
+                                              <div class="d-flex align-items-center">
+                                                  <div class="employee-profile-header">
+                                                      <div class="profile profile-32">
+                                                      <div class="profile-picture-container">
+                                                          <img class="profile-picture ki-sm" src="../../../assets/apple.png" alt="">
+                                                      </div>
+                                                      </div>
+                                                  </div>
+                                                  
+                                              </div>
+                                              <div>
+                                                  <label>List Item 3</label>
+                                                  <h6 class="text-normal">sreejajangala@gmail.com</h6>
+                                              </div>
+                                          </div>
+                                  </label>
+                              </label>
+                          </li>
+                      </div>
+                      
+                      <div class="border-1 bg-secondary d-flex justify-content-between align-items-center p-12">
+                          <h6 class="text-normal">22 Members selected</h6>
+                          <button class="btn text-white bg-accent-violet">Add Members</button>
+                      </div>
+                  </ul>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+    <div class="coldt-layout p-20">
+        <div class="left-container large">
+          <h3>Participants</h3>
+          <div class="card nav-list-card clear-margin">
+            <div class="card-body clear-padding">
+              <div class="input-search">
+                  <input type="text" class="form-control" placeholder="Search" />
+                  <span class="icon ki ki-search"></span>
+              </div> 
+              <div class="list-group h-300 screen-height-card">
+                <a class="list-group-item  border-dashed border-bottom border-top-0" *ngFor="let member of club.clubParticipants ;let i=index">
+                      <div class="d-flex justify-content-between ">
+                          <div class="d-flex align-items-center">
+                              <div class="employee-profile-header">
+                                  <div class="profile profile-24">
+                                  <div class="profile-picture-container">
+                                      <img class="profile-picture ki-sm" src="../../../assets/apple.png" alt="">
+                                  </div>
+                                  </div>
+                              </div>
+                              <label>{{member.participantName}}</label>
+                              <i class="ki ki-shield-check" *ngIf="member.participantRole==1 || member.participantRole==2   "></i>
+                          </div>
+                          <div class="dropdown" dropdown>
+                              <a class="ki-click" dropdownToggle id="dropdown-menu">
+                                  <span class="ki ki-more-vertical mr-10" (click)="getDropdownText(member)"></span>
+                              </a>
+                              <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-menu" *dropdownMenu>
+                                  <li>
+                                      <!-- <a class="dropdown-item" *ngIf="member.participantRole==1">Remove as Admin</a>
+                                      <a class="dropdown-item" *ngIf="member.participantRole!=1">Make as Admin</a> -->
+                                      <a class="dropdown-item" (click)="changeAdmin(member,i)">{{adminText}}</a>
+                                  </li>
+                                  <li>
+                                      <a class="dropdown-item" (click)="changeStatus(member,i)">{{blockedText}}</a>
+                                  </li>  
+                              </ul>
+                          </div>
+                      </div>
+                      <div class="d-flex align-items-center ">
+                          <span class="text-link ml-30 ">{{member.participantEmail}}</span>
+                          <div class="dot dot-xs bg-danger mx-10" *ngIf="member.isBlocked"></div>
+                          <h6 class="text-danger text-small" *ngIf="member.isBlocked">Blocked</h6>
+                          <div class="dot dot-xs bg-danger mx-10" *ngIf="!member.isBlocked && !member.isActive"></div>
+                          <h6 class="text-danger text-small" *ngIf="!member.isBlocked && !member.isActive">In Active</h6>
+                          <div class="dot dot-xs bg-success mx-10" *ngIf="!member.isBlocked && member.isActive"></div>
+                          <h6 class="text-success text-small" *ngIf="!member.isBlocked && member.isActive">Active</h6>
+                      </div>
+                </a>
+      
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="right-container">
+          <h3>Requests</h3>
+          <div class="list-group border h-85 screen-height-card" *ngIf="club.clubDescription.clubType==1 && club.clubRequests.length!=0">
+              <a class="list-group-item border-dashed border-bottom border-top-0 border-left-0 border-right-0" *ngFor="let request of club.clubRequests ;let i=index">
+                  <div class="d-flex justify-content-between">
+                      <div class="d-flex align-items-center">
+                          <div class="employee-profile-header">
+                              <div class="profile profile-24">
+                              <div class="profile-picture-container">
+                                  <img class="profile-picture ki-sm" src="{{request.profilePicture}}" alt="">
+                              </div>
+                              </div>
+                          </div>
+                          <label>{{request.name}}</label>
+                      </div>
+                      <div>
+                          <i class="ki ki-check-circle-fill text-success" (click)="addParticipant(request,i)"></i>
+                          <i class="ki ki-cancel-circle text-danger" (click)="removeRequest(i)"></i>
+                      </div>
+                  </div>
+                  <div class="d-flex align-items-center ">
+                      <span class="ml-30 ">{{request.email}}</span>
+                  </div>
+             </a>
+          </div>
+          <div class="list-group border h-85 screen-height-card" *ngIf="club.clubDescription.clubType==1 && club.clubRequests.length==0">
+           <div class="card-body">
+            <p>There are no reuquests here</p>
+           </div>
+        </div>
+          <div class="card-body border" *ngIf="club.clubDescription.clubType!=1 clear-margin">
+            <span class="text-danger">There are no Requests as it is a Private Club</span>
+          </div>
+          <h3 class="my-10">Group Settings</h3>
+          <div class="card clear-margin p-20">
+              <div class="d-flex align-items-center">
+                  <p class="mr-10">Make Iphone users club a public club</p>
+                  <!-- <input type="checkbox" class="toggle-switch" id="toggle-switch" *ngIf="club.clubDescription.clubType==2 || club.clubDescription.clubType==3" > -->
+                  <input type="checkbox" class="toggle-switch" id="toggle-switch" (change)="changeClubType()" [checked]="club.clubDescription.clubType==1">
+                  <label for="toggle-switch" class="switch-label"></label>
+              </div>
+             <div class="px-20" *ngIf="club.clubDescription.clubType==1 || club.clubDescription.clubType==2">
+                  <div class="d-flex align-items-center mt-10">
+                      <!-- <input type="radio" name="radio"  class="radio-button-sm" id="radio-example" *ngIf="club.clubDescription.clubType==1"  checked/> -->
+                      <input type="radio" name="radio"  class="radio-button-sm" id="radio-example" (change)="changePublicClubType()" [checked]="club.clubDescription.clubType!=1" />
+                      <label for="radio-example" class="mr-10">
+                          Open club
+                      </label>
+                  </div>
+                  <div class="d-flex align-items-center mt-10">
+                          <!-- <input type="radio" name="radio"  class="radio-button-sm" id="radio-example1" *ngIf="club.clubDescription.clubType==2" checked/> -->
+                          <input type="radio" name="radio"  class="radio-button-sm" id="radio-example1" (change)="changePublicClubType()" [checked]="club.clubDescription.clubType!=2" />
+                          <label for="radio-example1" class="mr-10">
+                              Closed Club
+                          </label>
+                  </div>
+             </div>
+              <div class="py-12">
+                  <!-- <input type="checkbox" class="checkbox-sm" id="checkbox-example-sm" *ngIf="isClubMuted" checked> -->
+                  <input type="checkbox" class="checkbox-sm" id="checkbox-example-sm"  (click)="muteClub()" [checked]="isClubMuted">
+                  <label for="checkbox-example-sm"> Mute all notifications & messages from this club</label>
+              </div>
+              <div class="d-flex ">
+                  <div class="border border-color-violet w-120 d-flex justify-content-center rounded mr-10">
+                      <button class="btn text-accent-violet clear-margin clear-padding" (click)="openModal(deactivateClub)">Deactivate Club</button>
+                  </div>
+                  <div class="border border-color-violet w-80 d-flex justify-content-center rounded">
+                      <button class="btn text-accent-violet clear-margin clear-padding">Exit Club</button>
+                  </div>
+              </div>
+          </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #deactivateClub>
+    <div class="modal-body clear-padding">
+        <div class="bg-secondary d-flex justify-content-between align-items-center p-16 border-bottom rounded">
+            <h4 class="modal-title text-black"> Deactivate {{club.clubDescription.clubName}} </h4>
+            <span class="ki ki-close cursor-pointer" (click)="hide()"></span>
+        </div>
+        <div class="content-section p-16 pb-0">
+            <h4>What happens next?</h4>
+            <ul class="list-style-circle">
+                <li>Current club members will no longer be able to continue conversation in this club and the club
+                    owners can no longer be edit and manage the club</li>
+                <li>All actions will be disabled until the club is reactivated</li>
+            </ul>
+            <div class="form-group mt-20">
+                <label class="font-size-semi-bold text-large">Reason</label>
+                <textarea class="form-control resize-none" rows="3"></textarea>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer pt-0">
+        <button class="btn bg-slate text-white" (click)="hide()">Cancel</button>
+        <button class="btn bg-accent-violet text-white ml-10">Confirm</button>
+    </div>
+</ng-template>

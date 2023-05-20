@@ -1,0 +1,72 @@
+<div class="card nav-list-card clear-margin-x clear-margin-y">
+    <div class="card-body clear-padding ">
+        <div class="input-search d-flex">
+            <input type="text" class="form-control h-60" placeholder="Search chat" [(ngModel)]="searchText" />
+            <span class="icon ki ki-search ml-10 ki-xs"></span>
+        </div>   
+        <div class="h-500 screen-height-card">
+            <div class="list-header">
+                <label>Favorites</label>
+            </div> 
+            <div class="list-group w-400" >
+                <ng-container *ngFor="let chat of chatList | filter:searchText" >
+                    <a class="list-group-item text-capitalize border-bottom border-top-0 border-dashed " *ngIf="chat.isUserFavorite" [routerLink]="[chat.receiverId,'chat-detail']" (click)="makeAllSeen(chat)" routerLinkActive="active" >
+                        <div class="d-flex justify-content-between">
+                            <div class="d-flex">
+                                <div> 
+                                    <div class="employee-profile-header">
+                                        <div class="profile profile-24">
+                                            <div class="profile-picture-container">
+                                                <img class="profile-picture" src="../../../assets/apple.png" alt="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex-grow-1">
+                                    <label>{{chat.receiverName}}</label>
+                                    <span class="text-truncate-1">{{chat.lastMessage}}</span>
+                                </div>
+                            </div>
+                            <div class="w-100px text-right">
+                                <h6 class="text-small text-primary" *ngIf="sameDate(chat.lastMessageTime)">{{chat.lastMessageTime|date:'shortTime'}}</h6>
+                                <h6 class="text-small text-primary" *ngIf="!sameDate(chat.lastMessageTime)">{{chat.lastMessageTime|date}}</h6>
+                                <span class="badge badge-pill text-white text-label bg-warning" *ngIf="chat.unseenMessageCount!=0">{{chat.unseenMessageCount}}</span>
+                            </div>
+                        </div>
+                    </a>
+                </ng-container>
+            </div>
+            <div class="list-header">
+                <label>chats</label>
+            </div>  
+            <div class="list-group w-400">
+                <ng-container *ngFor="let chat of chatList | filter:searchText" >
+                    <a class="list-group-item text-capitalize border-bottom border-top-0 border-dashed " *ngIf="!chat.isUserFavorite" [routerLink]="[chat.receiverId,'chat-detail']" (click)="makeAllSeen(chat)" routerLinkActive="active" >
+                        <div class="d-flex justify-content-between">
+                            <div class="d-flex">
+                                <div> 
+                                    <div class="employee-profile-header">
+                                        <div class="profile profile-24">
+                                            <div class="profile-picture-container">
+                                                <img class="profile-picture" src="../../../assets/apple.png" alt="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex-grow-1">
+                                    <label>{{chat.receiverName}}</label>
+                                    <span class="text-truncate-1">{{chat.lastMessage}}</span>
+                                </div>
+                            </div>
+                            <div class="w-100px text-right">
+                                <h6 class="text-small text-primary" *ngIf="sameDate(chat.lastMessageTime)">{{chat.lastMessageTime|date:'shortTime'}}</h6>
+                                <h6 class="text-small text-primary" *ngIf="!sameDate(chat.lastMessageTime)">{{chat.lastMessageTime|date}}</h6>
+                                <span class="badge badge-pill text-white text-label bg-warning" *ngIf="chat.unseenMessageCount!=0">{{chat.unseenMessageCount}}</span>
+                            </div>
+                        </div>
+                    </a>
+                </ng-container>
+            </div>
+        </div>  
+    </div>
+  </div>

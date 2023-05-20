@@ -1,0 +1,48 @@
+<div class="card clear-margin">
+    <div class="card-body grid-filters clear-padding">
+        <div class="report-filters">
+                    <div class="filters-container">
+                        <ng-container *ngFor="let filter of filters;let x=index">
+                            <div class="filter dropdown" dropdown>
+                                <a dropdownToggle>
+                                    <span class="filter-label-sm">{{filter.name}}</span>
+                                    <span class="ki-arrow-dropdown"></span>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-left w-100" aria-labelledby="dropdown-menu" *dropdownMenu>
+                                    <li *ngFor="let type of filter.filters;let y=index">
+                                        <a class="dropdown-item" (click)="getType(x,y)">{{type}}</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </ng-container>
+                        <div class="flex-grow-1 border-bottom position-relative">
+                            <div class="input-search mr-40">
+                                <input type="text" placeholder="Search" class="form-control border-0 h-100 w-100"
+                                     [(ngModel)]="userListSearch" (input)="search()"> 
+                                <span class="ki-search ki ki-sm"></span>
+                            </div>
+                        </div>
+                        <div class="border-left border-bottom w-100px d-flex align-items-center">
+                            <a class="m-auto" (click)="resetSearch()">
+                                <span class="ki-rotate-left"></span>
+                                <span class="text-secondary text-uppercase ml-2 text-x-small">Reset</span>
+                            </a>
+                        </div>
+                    </div>
+        </div>
+        <div class="grid-options border-bottom">
+            <div></div>
+            <div>
+                <p class="text-x-small text-secondary">Showing 30 of 200</p>
+            </div>
+        </div>
+        <div class="mt-20">
+            <ag-grid-angular 
+                class="ag-theme-material h-100 w-100" 
+                [gridOptions]="gridOptions"
+                (gridReady)="fun()"
+                domLayout="autoHeight">
+            </ag-grid-angular>
+        </div>
+    </div>
+</div>

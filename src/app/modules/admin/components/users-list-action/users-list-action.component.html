@@ -1,0 +1,84 @@
+<div class="dropdown" dropdown container="body">
+    <a class="icon-click" dropdownToggle id="dropdown-menu" aria-haspopup="true" aria-expanded="false">
+      <span class="ki ki-more-vertical ml-2"></span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-left" aria-labelledby="dropdown-menu" *dropdownMenu>
+      <li><a class="dropdown-item" (click)="openTemplateModal(deactivateClub)" *ngIf="userActive; else userInactive">De-activate User</a></li>
+      <ng-template #userInactive>
+        <li><a class="dropdown-item" (click)="openTemplateModal(reactivateClub)">Activate User</a></li>
+      </ng-template>
+      <li><a class="dropdown-item" (click)="openTemplateModal(deleteUser)">Delete Permanantly</a></li>
+    </ul>
+</div>
+
+<ng-template #deactivateClub>
+  <div class="modal-body clear-padding">
+    <div class="bg-secondary d-flex justify-content-between align-items-center p-16 border-bottom rounded">
+      <h4 class="modal-title text-black"> Deactivate {{name}}</h4>
+      <span class="ki ki-close cursor-pointer" (click)="modalReference.hide()"></span>
+    </div>
+    <div class="content-section p-16 pb-0">
+      <h4>What happens next?</h4>
+      <ul class="list-style-circle">
+        <li>Current club members will no longer be able to continue conversation in this club and the club owners can no longer be edit and manage the club</li>
+        <li>All actions will be disabled until the club is reactivated</li>
+      </ul>
+      <div class="form-group mt-20">
+        <label class="font-size-semi-bold text-large">Reason</label>
+        <textarea class="form-control resize-none" rows="3"></textarea>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer pt-0">
+    <button class="btn bg-slate text-white" (click)="modalReference.hide()">Cancel</button>
+    <button class="btn bg-accent-violet text-white ml-10">Confirm</button>
+  </div>
+</ng-template>
+
+<ng-template #reactivateClub>
+  <div class="modal-body clear-padding">
+    <div class="bg-secondary d-flex justify-content-between align-items-center p-16 border-bottom rounded">
+      <h4 class="modal-title text-black"> Reactivate Club </h4>
+      <span class="ki ki-close cursor-pointer" (click)="modalReference.hide()"></span>
+    </div>
+    <div class="content-section p-16 pb-0">
+      <h4>What happens next?</h4>
+      <ul class="list-style-circle">
+        <li>All the club members will be able to see the club and communicate through it</li>
+        <li>This club will be shown to all users if it is public</li>
+      </ul>
+      <div class="form-group mt-20">
+        <label class="font-size-semi-bold text-large">Reason</label>
+        <textarea class="form-control resize-none" rows="3"></textarea>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer pt-0">
+    <button class="btn bg-slate text-white" (click)="modalReference.hide()">Cancel</button>
+    <button class="btn bg-accent-violet text-white ml-10">Confirm</button>
+  </div>
+</ng-template>
+
+<ng-template #deleteUser>
+  <div class="modal-body clear-padding">
+    <div class="bg-secondary d-flex justify-content-between align-items-center p-16 border-bottom rounded">
+      <h4 class="modal-title text-black">Delete User</h4>
+      <span class="ki ki-close cursor-pointer" (click)="modalReference.hide()"></span>
+    </div>
+    <div class="content-section p-16 pb-0">
+      <h4>What happens next?</h4>
+      <ul class="list-style-circle">
+        <li>This user will be completely removed from the Corporate Chat Club.</li>
+        <li>This user will be removed from all the clubs he is part of and removed from all his connections</li>
+      </ul>
+      <div class="form-group mt-20">
+        <label class="font-size-semi-bold text-large">Reason</label>
+        <textarea class="form-control resize-none" rows="3"></textarea>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer pt-0">
+    <button class="btn bg-slate text-white" (click)="modalReference.hide()">Cancel</button>
+    <button class="btn bg-accent-violet text-white ml-10">Confirm</button>
+  </div>
+</ng-template>

@@ -1,0 +1,32 @@
+<div class="card clear-margin">
+    <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center">
+            <h3>Contact Details</h3>
+            <div>
+                <i class="ki ki-edit mr-10"></i>
+                <i class="ki ki-eye cursor-pointer" #displayContactDetails *ngIf="displayContactDetails; else hideContactDetails" (click)="changeVisibility()"></i>
+                <ng-template #hideContactDetails>
+                    <i class="ki ki-eye-slash cursor-pointer" (click)="changeVisibility()"></i>
+                </ng-template>
+            </div>
+        </div>
+        <div>
+            <div class="data-bar multiple-line-bar mt-10">
+                <div class="data-block">
+                    <label class="data-label">Work Phone</label>
+                    <p>{{contactDetails.workPhone}}</p>
+                </div>
+                <div class="data-block">
+                    <label class="data-label">Email</label>
+                    <p>{{contactDetails.email}}</p>
+                </div>
+            </div>
+            <div class="data-bar multiple-line-bar mt-10 w-450">
+                <div class="data-block">
+                    <label class="data-label">Address</label>
+                    <p>{{contactDetails.addressLine1 + ', ' + contactDetails.addressLine2 + ', ' + contactDetails.addressLine3}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

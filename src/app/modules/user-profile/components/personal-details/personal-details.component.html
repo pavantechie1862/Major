@@ -1,0 +1,56 @@
+<div class="card clear-margin">
+    <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center">
+            <h3>Personal Details</h3>
+            <i class="ki ki-edit cursor-pointer" (click)="openPersonalDetailsForm()"></i>
+        </div>
+        <div>
+            <div class="data-bar multiple-line-bar mt-10">
+                <div class="data-block">
+                    <label class="data-label">First Name</label>
+                    <p>{{personalDetails.firstName}}</p>
+                </div>
+                <div class="data-block ml-100">
+                    <label class="data-label">Middle Name</label>
+                    <p>{{personalDetails.middleName}}</p>
+                </div>
+            </div>
+            <div class="data-bar multiple-line-bar mt-10">
+                <div class="data-block">
+                    <label class="data-label">Last Name</label>
+                    <p>{{personalDetails.lastName}}</p>
+                </div>
+                <div class="data-block ml-100">
+                    <label class="data-label">Display Name</label>
+                    <p>{{personalDetails.firstName + ' ' + personalDetails.lastName}}</p>
+                </div>
+            </div>
+            <div class="data-bar multiple-line-bar mt-10">
+                <div class="data-block">
+                    <label class="data-label">Gender</label>
+                    <p>{{personalDetails.gender}}</p>
+                </div>
+                <div class="data-block ml-100">
+                    <label class="data-label">Date od Birth</label>
+                    <p>{{personalDetails.dob | date: 'dd/MM/YYYY'}}</p>
+                </div>
+            </div>
+            <div class="data-bar multiple-line-bar mt-10">
+                <div class="data-block">
+                    <label class="data-label">Marital Status</label>
+                    <p>{{personalDetails.martialStatus}}</p>
+                </div>
+                <div class="data-block ml-100">
+                    <label class="data-label">Blood Group</label>
+                    <p>{{personalDetails.bloodGroup}}</p>
+                </div>
+            </div>
+            <div class="data-bar multiple-line-bar mt-10">
+                <div class="data-block">
+                    <label class="data-label">About</label>
+                    <p>{{personalDetails.about}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

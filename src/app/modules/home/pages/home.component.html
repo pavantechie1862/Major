@@ -1,0 +1,11 @@
+<div>
+  <ul class="nav sub-topnav">
+    <li  *ngFor="let item of topNavItems" routerLink="{{item.slug}}" routerLinkActive="active" >
+      <a>{{item.title}}</a>
+    </li>
+  </ul>  
+  <router-outlet></router-outlet>
+</div>
+
+
+<!-- *ngFor="let item of navItems" routerLink="{{item.slug}}" routerLinkActive="active" -->

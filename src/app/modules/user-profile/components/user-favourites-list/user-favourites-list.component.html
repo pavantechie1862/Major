@@ -1,0 +1,95 @@
+<div class="card clear-margin">
+    <div class="card-body grid-filters clear-padding">
+        <div class="report-filters">
+            <div class="filters-container">
+                <div class="filter dropdown">
+                    <a dropdowntoggle="">
+                        <span class="filter-label-sm">Ad Type</span>
+                        <span class="ki-arrow-dropdown"></span>
+                    </a>
+                </div>
+                <div class="filter dropdown">
+                    <a dropdowntoggle="">
+                        <span class="filter-label-sm">Category</span>
+                        <span class="ki-arrow-dropdown"></span>
+                    </a>
+                </div>
+                <div class="filter dropdown">
+                    <a dropdowntoggle="">
+                        <span class="filter-label-sm">Posted</span>
+                        <span class="ki-arrow-dropdown"></span>
+                    </a>
+                </div>
+                <div class="filter dropdown">
+                    <a dropdowntoggle="">
+                        <span class="filter-label-sm">Location</span>
+                        <span class="ki-arrow-dropdown"></span>
+                    </a>
+                </div>
+                <div class="flex-grow-1 border-bottom position-relative">
+                    <div class="input-search mr-40">
+                        <input type="text" placeholder="Search" class="form-control border-0 h-100 w-100"
+                            [(ngModel)]="favouriteUserSearch">
+                        <span class="ki-search ki ki-sm"></span>
+                    </div>
+                </div>
+                <div class="border-left border-bottom w-100px d-flex align-items-center">
+                    <a class="m-auto">
+                        <span class="ki-rotate-left"></span>
+                        <span class="text-secondary text-uppercase ml-2 text-x-small">Reset</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row no-gutters">
+    <div class="col-default-4" *ngFor="let favouriteUser of favourites | filter : favouriteUserSearch">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex">
+                    <div class="employee-profile-header align-self-start">
+                        <div class="profile profile-60">
+                            <div class="profile-picture-container">
+                                <div>
+                                    <img class="profile-picture" src="{{favouriteUser.profileImage}}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ml-10">
+                        <div>
+                            <h4>{{favouriteUser.userName}}</h4>
+                            <p class="text-x-small">{{favouriteUser.userCaption}}</p>
+                        </div>
+                        <div class="mt-20">
+                            <div class="d-flex jsutify-content-center align-items-center">
+                                <i class="ki ki-bank"></i>
+                                <p class="ml-1">{{favouriteUser.mutualConnectionCount}} in mutual</p>
+                            </div>
+                            <div class="d-flex jsutify-content-center align-items-center mt-10">
+                                <i class="ki ki-mail"></i>
+                                <p class="ml-1">{{favouriteUser.userEmail}}</p>
+                            </div>
+                            <div class="d-flex jsutify-content-center align-items-center mt-10">
+                                <i class="ki ki-phone"></i>
+                                <p class="ml-1">+91 {{favouriteUser.userMobile}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- <div class="mt-20">
+
+</div>
+<div class="card clear-margin">
+    <div class="card-body">
+        
+    </div>
+</div> -->

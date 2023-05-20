@@ -1,0 +1,65 @@
+<div class="page-container">
+    <div class="page-title">
+        <div class="d-flex justify-content-between">
+            <h2>My threads</h2>
+            <button class="btn text-white bg-accent-violet" (click)="openModal(connections)">Create New</button>
+        </div>
+        <div class="mt-10 d-flex coldt-layout">
+            <div class="clear-margin-x">
+                <app-thread-list></app-thread-list>
+            </div>
+            <div class="flex-grow-1">
+                <router-outlet></router-outlet>     
+                <!-- <app-club-chat></app-club-chat> -->
+                <!-- <app-thread-chat></app-thread-chat> -->
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<ng-template #connections>
+    <div class="modal-header bg-secondary">
+      <h3>New Connection</h3>
+      <span class="icon ki-close" (click)="modalRef.hide()"></span>
+    </div>
+    <div class="card nav-list-card clear-margin-x clear-margin-y">
+      <div class="card-body clear-padding ">
+          <div class="input-search d-flex">
+              <input type="text" class="form-control border-0 h-60" placeholder="Search Club" />
+              <span class="icon ki ki-search ml-10 ki-xs"></span>
+          </div>   
+          <div>
+              <div class="list-header border">
+                  <label>Suggested</label>
+              </div> 
+              <div class="list-group h-500 screen-height-card" >
+                  <ng-container *ngFor="let user of connectionList">
+                      <a class="list-group-item text-capitalize border-bottom border-top-0 border-dashed w-100">
+                          <div class="d-flex justify-content-between align-items-center">
+                              <div class="d-flex">
+                                  <div> 
+                                      <div class="employee-profile-header">
+                                          <div class="profile profile-24">
+                                              <div class="profile-picture-container">
+                                                  <img class="profile-picture" src={{user.imgUrl}} alt="">
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="flex-grow-1">
+                                      <label>{{user.name}}</label>
+                                      <span class="text-truncate-1">{{user.mutualClubs}} Mutual Clubs | {{user.mutualConnections}} Mutual Connections</span>
+                                  </div>
+                              </div>
+                              <div class="w-100px text-right">
+                                <span class="icon ki ki-add-user ml-10"></span>
+                              </div>
+                          </div>
+                      </a>
+                  </ng-container>
+              </div>
+          </div>  
+      </div>
+    </div>
+</ng-template>

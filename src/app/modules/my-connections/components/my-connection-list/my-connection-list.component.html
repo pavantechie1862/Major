@@ -1,0 +1,116 @@
+<div class="card clear-margin-x">
+  <div class="card-body grid-filters clear-padding">
+    <div class="report-filters">
+      <div class="filters-container">
+        <div class="filter dropdown">
+          <a dropdowntoggle="">
+            <span class="filter-label-sm">Ad Type</span>
+
+            <span class="ki-arrow-dropdown"></span>
+          </a>
+        </div>
+        <!-- <ng-select
+          placeholder="Ad Type"
+          class="w-200"
+          [(ngModel)]="selectedType"
+          (change)="filterAdsByType(selectedType)"
+          required
+        >
+          <ng-option value="sale">For Sale</ng-option>
+          <ng-option value="rent">For Rent</ng-option>
+          <ng-option value="required">Required</ng-option>
+        </ng-select> -->
+
+        <div class="filter dropdown">
+          <a dropdowntoggle="">
+            <span class="filter-label-sm">Category</span>
+
+            <span class="ki-arrow-dropdown"></span>
+          </a>
+        </div>
+
+        <div class="filter dropdown">
+          <a dropdowntoggle="">
+            <span class="filter-label-sm">Posted</span>
+
+            <span class="ki-arrow-dropdown"></span>
+          </a>
+        </div>
+
+        <div class="filter dropdown">
+          <a dropdowntoggle="">
+            <span class="filter-label-sm">Location</span>
+
+            <span class="ki-arrow-dropdown"></span>
+          </a>
+        </div>
+
+        <div class="flex-grow-1 border-bottom position-relative">
+          <div class="input-search mr-40">
+            <input
+              type="text"
+              placeholder="Search"
+              class="form-control border-0 h-100 w-100"
+              [(ngModel)]="searchText"
+            />
+            <span class="ki-search ki ki-sm"></span>
+          </div>
+        </div>
+
+        <div
+          class="border-left border-bottom w-100px d-flex align-items-center"
+        >
+          <a class="m-auto">
+            <span class="ki-rotate-left"></span>
+
+            <span
+              class="text-secondary text-uppercase ml-2 text-x-small"
+              (click)="resetSearch()"
+              >Reset</span
+            >
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row no-gutters">
+  <ng-container *ngFor="let connection of connectionList | filter : searchText">
+    <div class="col-default-3">
+      <div class="card employee-profile-card">
+        <div class="card-body employee-profile-header">
+          <div size="200" class="profile profile-80">
+            <div class="profile-picture-container">
+              <img
+                class="profile-picture"
+                src="{{ connection.imgUrl }}"
+                alt=""
+              />
+            </div>
+          </div>
+          <div class="employee-details">
+            <div class="d-flex align-items-center">
+              <h4 class="text-truncate" title="Abdul Razak Shaik">
+                {{ connection.name }}
+              </h4>
+            </div>
+            <span>{{ connection.about }} </span>
+            <div class="d-flex align-items-center py-4">
+              <span class="ki ki-bank ki-sm mr-10"></span>
+              <p>{{ connection.mutualConnections }} in mutual</p>
+            </div>
+            <div class="d-flex align-items-center py-4">
+              <span class="ki ki-mail ki-sm mr-10"></span>
+              <p>{{ connection.mail }}</p>
+            </div>
+            <div class="d-flex align-items-center py-4">
+              <span class="ki ki-phone ki-sm mr-10"></span>
+              <p>{{ connection.contact }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>

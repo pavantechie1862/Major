@@ -1,0 +1,219 @@
+<!--club filters-->
+<div class="card clear-margin">
+  <div class="card-body grid-filters clear-padding">
+    <div class="report-filters">
+      <div class="filters-container">
+        <ng-container *ngFor="let filter of filters; let x = index">
+          <div class="filter dropdown" dropdown>
+            <a dropdownToggle>
+              <span class="filter-label-sm">{{ filter.name }}</span>
+              <span class="ki-arrow-dropdown"></span>
+            </a>
+            <ul
+              class="dropdown-menu dropdown-menu-left w-100"
+              aria-labelledby="dropdown-menu"
+              *dropdownMenu
+            >
+              <li *ngFor="let type of filter.filters; let y = index">
+                <a class="dropdown-item" (click)="getType(x, y)">{{ type }}</a>
+              </li>
+            </ul>
+          </div>
+        </ng-container>
+        <div class="flex-grow-1 border-bottom position-relative">
+          <div class="input-search mr-40">
+            <input
+              type="text"
+              placeholder="Search"
+              class="form-control border-0 h-100 w-100"
+              [(ngModel)]="clubListSearch"
+            />
+            <span class="ki-search ki ki-sm"></span>
+          </div>
+        </div>
+        <div
+          class="border-left border-bottom w-100px d-flex align-items-center"
+        >
+          <a class="m-auto" (click)="resetSearch()">
+            <span class="ki-rotate-left"></span>
+            <span class="text-secondary text-uppercase ml-2 text-x-small"
+              >Reset</span
+            >
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row no-gutters">
+  <div
+    class="col-default-4"
+    *ngFor="let club of matchedClubs | filter : clubListSearch; let i = index"
+  >
+    <div class="card">
+      <div class="card-body clear-padding">
+        <div class="d-flex justify-content-between p-16 border-bottom">
+          <h3>{{ club.clubName }}</h3>
+          <div class="dropdown" dropdown>
+            <a
+              class="icon-click"
+              dropdownToggle
+              id="dropdown-menu"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              <span class="ki-more-vertical ki"></span>
+            </a>
+            <ul
+              class="dropdown-menu dropdown-menu-right"
+              aria-labelledby="dropdown-menu"
+              *dropdownMenu
+            >
+              <li>
+                <a
+                  class="dropdown-item"
+                  (click)="openTemplateModal(deactivateClub)"
+                  >De-activate club</a
+                >
+              </li>
+              <li>
+                <a class="dropdown-item" (click)="openTemplateModal(reportClub)"
+                  >Report Club</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="border-bottom">
+          <img class="w-100 h-200" src="{{ club.clubProfilePicture }}" alt="" />
+        </div>
+        <div class="p-16">
+          <p class="font-weight-semi-bold text-large">{{ club.description }}</p>
+          <p class="text-secondary text-x-small">
+            Created by {{ club.clubCreatedBy }} on
+            {{
+              club.clubCreatedOn
+                | date
+                  : "MMM
+                        dd, YYYY"
+            }}
+          </p>
+          <div class="d-flex justify-content-between mt-20">
+            <div class="d-flex align-items-center">
+              <i class="ki ki-user"></i>
+              <p class="text-secondary ml-2">
+                {{ club.clubParticipantsCount }}
+              </p>
+            </div>
+
+            <button
+              class="btn btn-sm btn-link"
+              *ngIf="club.isClubMember; else isPublic"
+              (click)="exitClub(club)"
+            >
+              Exit
+            </button>
+            <ng-template #isPublic>
+              <button
+                class="btn btn-sm bg-accent-violet text-white"
+                *ngIf="club.clubType == 1; else isRequested"
+                (click)="publicJoinClub(club)"
+              >
+                Join
+              </button>
+            </ng-template>
+            <ng-template #isRequested>
+              <button
+                class="btn btn-sm bg-slate text-white"
+                *ngIf="club.isRequested; else isPrivate"
+                (click)="cancelRequest(club)"
+              >
+                Cancel Request
+              </button>
+            </ng-template>
+            <ng-template #isPrivate>
+              <button
+                class="btn btn-sm bg-accent-violet text-white"
+                (click)="privateJoinClub(club)"
+              >
+                Request Join
+              </button>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <ng-template #deactivateClub>
+      <div class="modal-body clear-padding">
+        <div
+          class="bg-secondary d-flex justify-content-between align-items-center p-16 border-bottom rounded"
+        >
+          <h4 class="modal-title text-black">Deactivate {{ club.clubName }}</h4>
+          <span
+            class="ki ki-close cursor-pointer"
+            (click)="modalReference.hide()"
+          ></span>
+        </div>
+        <div class="content-section p-16 pb-0">
+          <h4>What happens next?</h4>
+          <ul class="list-style-circle">
+            <li>
+              Current club members will no longer be able to continue
+              conversation in this club and the club owners can no longer be
+              edit and manage the club.
+            </li>
+            <li>All actions will be disabled until the club is reactivated.</li>
+          </ul>
+          <div class="form-group mt-20">
+            <label class="font-size-semi-bold text-large">Reason</label>
+            <textarea class="form-control resize-none" rows="3"></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer pt-0">
+        <button class="btn bg-slate text-white" (click)="modalReference.hide()">
+          Cancel
+        </button>
+        <button class="btn bg-accent-violet text-white ml-10">Confirm</button>
+      </div>
+    </ng-template>
+
+    <ng-template #reportClub>
+      <div class="modal-body clear-padding">
+        <div
+          class="bg-secondary d-flex justify-content-between align-items-center p-16 border-bottom rounded"
+        >
+          <h4 class="modal-title text-black">Report {{ club.clubName }}</h4>
+          <span
+            class="ki ki-close cursor-pointer"
+            (click)="modalReference.hide()"
+          ></span>
+        </div>
+        <div class="content-section p-16 pb-0">
+          <h4>What happens next?</h4>
+          <ul class="list-style-circle">
+            <li>
+              A flag will be raised against the club with the specified reason.
+            </li>
+            <li>
+              Admin will take necessary action on the club based on the flag
+              raised.
+            </li>
+          </ul>
+          <div class="form-group mt-20">
+            <label class="font-size-semi-bold text-large">Reason</label>
+            <textarea class="form-control resize-none" rows="3"></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer pt-0">
+        <button class="btn bg-slate text-white" (click)="modalReference.hide()">
+          Cancel
+        </button>
+        <button class="btn bg-accent-violet text-white ml-10">Confirm</button>
+      </div>
+    </ng-template>
+  </div>
+</div>

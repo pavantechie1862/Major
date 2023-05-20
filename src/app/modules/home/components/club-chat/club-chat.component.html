@@ -1,0 +1,202 @@
+<div class="card clear-margin">
+    <div class="border mail-box card-body border-bottom-0 border-left-0 clear-padding" *ngIf="club">
+        <div class="p-20 d-flex justify-content-between">
+            <h3>{{ club.clubInformation.clubName }}</h3>
+            <div class="dropdown" dropdown>
+                <a class="ki-click" dropdownToggle id="dropdown-menu">
+                    <span class="ki ki-more-vertical"></span>
+                </a>
+                <ul class="dropdown-menu w-200 dropdown-menu-right" aria-labelledby="dropdown-menu" *dropdownMenu>
+                    <li>
+                        <a class="dropdown-item" routerLink="../club-info"><i class="ki ki-info"></i>Group info</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" (click)="openSmallModal(muteNotifications)"><i
+                                class="ki ki-bell"></i>{{isMuted}}</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" (click)="markFavorite()"><i class="ki ki-heart-fill"></i>{{ isFavorite
+                            }}</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" (click)="openSmallModal(leaveClub)"><i
+                                class="ki ki-flight-fill"></i>Exit club</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="border h-400 screen-height-card bg-secondary px-20 py-8 " [scrollTop]="scrollMe.scrollHeight"  #scrollMe>
+            <div class="d-flex flex-column mb-10" *ngFor="let message of club.messages">
+                <div class="align-self-end" *ngIf="
+            currentUserId == message.senderId &&
+            !message.messageBody.messageType
+          ">
+                    <div class="d-flex align-items-center my-10">
+                        <!-- <i class="ki ki-face-laugh-fill mr-10"></i> -->
+                        <div class="employee-profile-header">
+                            <div class="profile profile-24">
+                                <div class="profile-picture-container">
+                                    <img class="profile-picture" src="../../../assets/apple.png" alt="" />
+                                </div>
+                            </div>
+                        </div>
+                        <h5 class="mr-10 text-normal text-primary text-capitalize">You</h5>
+                        <h6 class="text-x-small text-secondary text-normal">
+                            {{ message.messageTime | date : "MMM dd, YYYY 'at' HH:MM" }}
+                        </h6>
+                    </div>
+                </div>
+                <div class="card clear-margin p-12 w-300 align-self-end" *ngIf="
+            currentUserId == message.senderId &&
+            !message.messageBody.messageType
+           ">
+                    <div>
+                        {{ message.messageBody.message }}
+                    </div>
+                    <div *ngIf="message.messageAttachment.length" class="align-items-center d-flex">
+                        <ng-container *ngFor="let file of message.messageAttachment">
+                            <i class="ki ki-attachment ki-sm"></i>
+                            <span class="mr-10 text-truncate-1">{{file}}</span>
+                        </ng-container>
+                    </div>
+                </div>
+                <div *ngIf="
+            !(currentUserId == message.senderId) &&
+            !message.messageBody.messageType
+            ">
+                    <div class="d-flex align-items-center my-10">
+                        <!-- <i class="ki ki-face-laugh-fill mr-10"></i> -->
+                        <div class="employee-profile-header">
+                            <div class="profile profile-24">
+                                <div class="profile-picture-container">
+                                    <img class="profile-picture" src="../../../assets/apple.png" alt="" />
+                                </div>
+                            </div>
+                        </div>
+                        <h5 class="mr-10 text-normal text-primary text-capitalize">
+                            {{ message.senderName }}
+                        </h5>
+                        <h6 class="text-x-small text-secondary text-normal">
+                            {{ message.messageTime | date : "MMM dd, YYYY 'at' HH:MM" }}
+                        </h6>
+                    </div>
+                </div>
+                <div class="card clear-margin p-12 w-300" *ngIf="
+            !(currentUserId == message.senderId) &&
+            !message.messageBody.messageType
+          ">
+                <div>
+                    {{ message.messageBody.message }}
+                </div>
+                <div *ngIf="message.messageAttachment.length" class="align-items-center d-flex">
+                    <ng-container *ngFor="let file of message.messageAttachment">
+                        <i class="ki ki-attachment ki-sm"></i>
+                        <span class="mr-10 text-truncate-1">{{file}}</span>
+                    </ng-container>
+                </div>
+                </div>
+                <div class="d-flex align-items-center my-20" *ngIf="message.messageBody.messageType">
+                    <div class="flex-grow-1 mr-16">
+                        <hr />
+                    </div>
+                    <p class="text-small text-secondary max-w-540 text-center">
+                        {{ message.messageBody.message }}
+                    </p>
+                    <div class="flex-grow-1 ml-16">
+                        <hr />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="py-4 px-12">
+            <div class="d-flex align-items-center justify-content-between">
+                <div>
+                    <input type="text" (keydown.enter)="addMessage()" [(ngModel)]="message" (focus)="changeToggle()"
+                        class="form-control w-800 border-0" placeholder="Type Message Here" />
+                </div>
+                <div>
+                    <span>
+                        <div>
+                            <div class="d-inline-flex justify-content-center align-items-center">
+                                <div containerclass="max-w-300" container="body" class="d-inline-block position-relative">
+                                    <span class="cursor-pointer ki ki-lg ki-attachment text-accent-violet"></span>
+                                    <input type="file" name="fileupload" class="input-file" title="No file chosen" accept=".png,.jpg,.jpeg,.doc,.docx,.pdf,.xps,.xls,.xlsx" (change)="uploadFiles($event)" multiple/>
+                                </div>
+                            </div>
+                        </div>
+                    </span>
+                </div>
+                <i class="ki ki-lg ki-face-smile text-success cursor-pointer"
+                    (click)="toggled = !toggled" >
+                    </i>
+                <div class="w-300 position-absolute right-0 top-50" *ngIf="toggled">
+                    
+                    <ngx-emoj class=" z-index-2"
+                        (onemojipick)="handleEmoji($event)"
+                        >
+                    </ngx-emoj>
+                    
+                </div>
+               
+                <div>
+                   <i class="ki ki-lg ki-send" (click)="addMessage()"></i>
+                </div>
+            </div>
+            <div class="w-100 screen-height-card overflow-scroll-x h-40" >
+                <div class="d-flex">
+                    <div class="chip-wrapper border-bottom-0" *ngFor="let item of files ;let i=index">
+                        <div class="chips employee-profile-header">
+                            <div displayname="Example Chip" firstname="Example" lastname="Chip" index="3" profileimageurl=""
+                                class="profile profile-32">
+                                <div class="profile-picture-container">
+                                    <div class="profile-picture ng-star-inserted">
+                                        <div class="img-initials bg-accent-violet">
+                                            <i class="ki ki-attachment text-white"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <span class="name">{{item}}</span><span class="ki ki-cancel-circle" (click)="deleteFile(i)"></span>
+                        </div>
+                    </div>
+                </div> 
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #muteNotifications>
+    <div class="modal-header bg-accent-white">
+        <h5 class="modal-title">Mute {{ club.clubInformation.clubName }} Club</h5>
+        <span class="icon ki-close" (click)="modalRef.hide()"></span>
+    </div>
+    <div class="modal-body">
+        <p>
+            This will mute all the messages and notifications regarding this club
+            until it is unmuted.
+        </p>
+        <p>Do you wish to continue?</p>
+    </div>
+    <div class="modal-footer p-20">
+        <button class="btn btn-secondary" (click)="modalRef.hide()">Cancel</button>
+        <button class="btn bg-accent-violet text-white" (click)="muteClub()" (click)="modalRef.hide()">Confirm</button>
+    </div>
+</ng-template>
+
+<ng-template #leaveClub>
+    <div class="modal-header bg-accent-white">
+        <h5 class="modal-title">Leave {{ club.clubInformation.clubName }} Club</h5>
+        <span class="icon ki-close" (click)="modalRef.hide()"></span>
+    </div>
+    <div class="modal-body">
+        <p>
+            You will no longer be a part of this club and the previous messages will
+            be deleted frome your account.
+        </p>
+        <p>Do you wish to continue?</p>
+    </div>
+    <div class="modal-footer p-20">
+        <button class="btn btn-secondary" (click)="modalRef.hide()">Cancel</button>
+        <button class="btn btn-danger">Leave</button>
+    </div>
+</ng-template>

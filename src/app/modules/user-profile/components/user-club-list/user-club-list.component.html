@@ -1,0 +1,80 @@
+<div class="card clear-margin">
+    <div class="card-body grid-filters clear-padding">
+        <div class="report-filters">
+            <div class="filters-container">
+                <div class="filter dropdown">
+                    <a dropdowntoggle="">
+                        <span class="filter-label-sm">Club Type</span>
+                        <span class="ki-arrow-dropdown"></span>
+                    </a>
+                </div>
+                <div class="filter dropdown">
+                    <a dropdowntoggle="">
+                        <span class="filter-label-sm">Status</span>
+                        <span class="ki-arrow-dropdown"></span>
+                    </a>
+                </div>
+                <div class="filter dropdown">
+                    <a dropdowntoggle="">
+                        <span class="filter-label-sm">Date Created</span>
+                        <span class="ki-arrow-dropdown"></span>
+                    </a>
+                </div>
+                <div class="flex-grow-1 border-bottom position-relative">
+                    <div class="input-search mr-40">
+                        <input type="text" placeholder="Search" class="form-control border-0 h-100 w-100" [(ngModel)]="userClubSearch">
+                        <span class="ki-search ki ki-sm"></span>
+                    </div>
+                </div>
+                <div class="border-left border-bottom w-100px d-flex align-items-center">
+                    <a class="m-auto">
+                        <span class="ki-rotate-left"></span>
+                        <span class="text-secondary text-uppercase ml-2 text-x-small">Reset</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row no-gutters">
+    <div class="col-default-4" *ngFor="let club of userClubs | filter : userClubSearch">
+        <div class="card">
+            <div class="card-body clear-padding">
+                <div class="d-flex justify-content-between p-16 border-bottom">
+                    <h3>{{club.clubName}}</h3>
+                    <div class="dropdown" dropdown>
+                        <a class="icon-click" dropdownToggle id="dropdown-menu" aria-haspopup="true"
+                            aria-expanded="false">
+                            <span class="ki-more-vertical ki"></span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-menu" *dropdownMenu>
+                            <li *ngIf="club.isAdmin">
+                                <a class="dropdown-item">De-activate club</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item">Report Club</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="border-bottom">
+                    <img class="w-100 h-200" src={{club.clubImage}} alt="">
+                </div>
+                <div class="p-16">
+                    <p class="font-weight-semi-bold text-large">{{club.clubDescription}}</p>
+                    <p class="text-secondary text-x-small">Created by {{club.createdBy}} on {{club.createdOn | date:"MMM
+                        dd, YYYY"}}</p>
+                    <div class="d-flex justify-content-between mt-20">
+                        <div class="d-flex align-items-center">
+                            <i class="ki ki-user"></i>
+                            <p class="text-secondary ml-2">{{club.clubParticipantsCount}}</p>
+                        </div>
+
+                        <button class="btn btn-sm btn-link">Exit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,219 @@
+<!--Adding user in  admin module/hr-->
+
+<div class="modal-header bg-secondary">
+  <h5 class="modal-title text-black">Setup your review group</h5>
+  <span class="ki ki-close" (click)="modalReference.hide()"></span>
+</div>
+<div class="modal-body d-flex justify-content-between">
+  <div class="content-section w-450">
+    <form [formGroup]="addUserForm">
+      <div class="d-flex justify-content-between align-items-center">
+        <div class="form-group">
+          <label>First Name</label>
+          <input
+            type="text"
+            class="form-control input-md"
+            formControlName="firstName"
+            [ngClass]="{
+              'border-danger':
+                addUserForm.get('firstName')!.invalid &&
+                (addUserForm.get('firstName')!.dirty ||
+                  addUserForm.get('firstName')!.touched)
+            }"
+          />
+          <div
+            *ngIf="
+              addUserForm.get('firstName')!.invalid &&
+              (addUserForm.get('firstName')!.dirty ||
+                addUserForm.get('firstName')!.touched)
+            "
+          >
+            <div
+              *ngIf="addUserForm.get('firstName')!.hasError('required')"
+              class="text-danger"
+            >
+              First Name is required
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Middle Name</label>
+          <input
+            type="text"
+            class="form-control input-md"
+            formControlName="middleName"
+          />
+        </div>
+      </div>
+      <div class="d-flex justify-content-between align-items-center">
+        <div class="form-group">
+          <label>Last Name</label>
+          <input
+            type="text"
+            class="form-control input-md"
+            formControlName="lastName"
+            [ngClass]="{
+              'border-danger':
+                addUserForm.get('lastName')!.invalid &&
+                (addUserForm.get('lastName')!.dirty ||
+                  addUserForm.get('lastName')!.touched)
+            }"
+          />
+          <div
+            *ngIf="
+              addUserForm.get('lastName')!.invalid &&
+              (addUserForm.get('lastName')!.dirty ||
+                addUserForm.get('lastName')!.touched)
+            "
+          >
+            <div
+              *ngIf="addUserForm.get('lastName')!.hasError('required')"
+              class="text-danger"
+            >
+              Last Name is required
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Display Name</label>
+          <input
+            type="text"
+            class="form-control input-md"
+            formControlName="displayName"
+          />
+        </div>
+      </div>
+      <div class="d-flex justify-content-between align-items-center">
+        <div class="form-group">
+          <label>Phone</label>
+          <input
+            type="tel"
+            class="form-control input-md"
+            formControlName="phone"
+            [ngClass]="{
+              'border-danger':
+                addUserForm.get('phone')!.invalid &&
+                (addUserForm.get('phone')!.hasError('pattern') ||
+                  addUserForm.get('phone')!.touched)
+            }"
+          />
+          <div
+            *ngIf="
+              addUserForm.get('phone')!.invalid &&
+              (addUserForm.get('phone')!.dirty ||
+                addUserForm.get('phone')!.touched)
+            "
+          >
+            <div
+              *ngIf="addUserForm.get('phone')!.hasError('required')"
+              class="text-danger"
+            >
+              Phone Number is required
+            </div>
+            <div
+              *ngIf="addUserForm.get('phone')!.hasError('pattern')"
+              class="text-danger"
+            >
+              Phone Number should contain 10 digits
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input
+            type="text"
+            class="form-control input-md"
+            formControlName="email"
+            [ngClass]="{
+              'border-danger':
+                addUserForm.get('email')!.invalid &&
+                (addUserForm.get('email')!.hasError('email') ||
+                  addUserForm.get('email')!.touched)
+            }"
+          />
+          <div
+            *ngIf="
+              addUserForm.get('email')!.invalid &&
+              (addUserForm.get('email')!.dirty ||
+                addUserForm.get('email')!.touched)
+            "
+          >
+            <div
+              *ngIf="addUserForm.get('email')!.hasError('required')"
+              class="text-danger"
+            >
+              Email is required
+            </div>
+            <div
+              *ngIf="addUserForm.get('email')!.hasError('email')"
+              class="text-danger"
+            >
+              Please enter valid email
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <input
+          type="checkbox"
+          id="checkbox-example"
+          formControlName="inviteToCorporateClub"
+        />
+        <label for="checkbox-example"
+          >Invite this user to access corporate clubs</label
+        >
+      </div>
+      <div class="mt-30">
+        Make this user as a member of following clubs
+        <div class="chip-wrapper">
+          <div
+            class="chips employee-profile-header"
+            *ngFor="let club of selectedClubList; let i = index"
+          >
+            <div class="profile profile-24">
+              <div class="profile-picture-container">
+                <div class="profile-picture ng-star-inserted">
+                  <div class="img-initials bg-accent-violet">
+                    {{ club.charAt(0) }}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <span class="name">{{ club }}</span
+            ><span class="ki ki-cancel-circle" (click)="deleteClub(i)"></span>
+          </div>
+          <div class="dropdown dropdown-custom dropdown-custom-xs" dropdown>
+            <input
+              type="text"
+              class="form-control chip-typeahead"
+              (input)="onClubInput()"
+              formControlName="clubs"
+              dropdownToggle
+            />
+            <ul
+              class="dropdown-menu w-150"
+              aria-labelledby="menu"
+              *dropdownMenu
+            >
+              <li *ngFor="let club of matchedClubList">
+                <a class="dropdown-item" (click)="onClubClick(club)">
+                  {{ club }}
+                </a>
+              </li>
+            </ul>
+          </div>
+          <!-- <input type="text" class="form-control chip-typeahead" > -->
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="modal-footer">
+  <button class="btn bg-slate text-white" (click)="modalReference.hide()">
+    Cancel
+  </button>
+  <button class="btn bg-accent-violet text-white ml-10" (click)="onSubmit()">
+    Add User
+  </button>
+</div>
